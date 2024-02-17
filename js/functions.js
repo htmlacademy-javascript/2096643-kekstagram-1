@@ -3,30 +3,30 @@ function reverseString (string) {
   return string.toLowerCase().replaceAll(' ', '').trim().split('').reverse().join('');
 }
 
-function checkPalindrom (string) {
+const checkPalindrom = (string) =>{
   const isPalindrom = reverseString(string);
   string = string.toLowerCase().replaceAll(' ', '');
   if (string === isPalindrom) {
     return ('Строка является палиндромом!');
   }
   return ('Строка не является палиндромом!');
-}
+};
 checkPalindrom('Лёша на полке клопа нашёл ');
 
 
 //Функция, которая принимает строку, извлекает содержащиеся в ней цифры от 0 до 9 и возвращает их в виде целого положительного числа
-function getNumber(string) {
+const getNumber = (string) =>{
   const number = string.replace(/^\D+/g, '').replace(/[^0-9]/g, '');
   const result = parseInt(number, 10);
   return result;
-}
+};
 Math.round(getNumber('1 кефир, 0.5 батона'));
 /*Функция, которая принимает три параметра: исходную строку, минимальную длину и строку с добавочными символами — и возвращает исходную строку,
 дополненную указанными символами до заданной длины. Символы добавляются в начало строки.
 Если исходная строка превышает заданную длину, она не должна обрезаться.
 Если «добивка» слишком длинная, она обрезается с конца.
 */
-function padString(string, minLength, symbols) {
+const padString = (string, minLength, symbols) => {
   if (string.length >= minLength) {
     return string;
   }
@@ -37,18 +37,18 @@ function padString(string, minLength, symbols) {
     repeadSymbol += symbols;
   }
   return repeadSymbol.slice(0, symbolLength) + string;
-}
+};
 padString('q', 4, 'werty');
 
 /*Функция для проверки длины строки. Она принимает строку, которую нужно проверить, и максимальную длину и возвращает true,
 если строка меньше или равна указанной длине, и false, если строка длиннее.
 Эта функция нам пригодится для валидации формы.
  */
-const checkLength = function (string, length) {
-  if (string.length > length) {
+const checkLength = (string, length) => {
+  if (string.length <= length) {
     return true;
   }
   return false;
 };
 
-checkLength('кораблекрушение', 30);
+checkLength('проверяемая строка', 20);
