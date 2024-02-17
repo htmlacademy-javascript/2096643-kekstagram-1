@@ -7,9 +7,9 @@ const checkPalindrom = (string) =>{
   const isPalindrom = reverseString(string);
   string = string.toLowerCase().replaceAll(' ', '');
   if (string === isPalindrom) {
-    return ('Строка является палиндромом!');
+    return true;
   }
-  return ('Строка не является палиндромом!');
+  return false;
 };
 checkPalindrom('Лёша на полке клопа нашёл ');
 
