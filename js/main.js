@@ -1,8 +1,8 @@
-const maxPhotoCount = 25;
-const maxCommentCount = 30;
-let identifier;
+const PHOTO_COUNT = 25;
+const COMMENT_COUNT = 30;
+const AVATAR_COUNT = 6;
 const ID = [];
-const names = [
+const NAMES = [
   'Алина',
   'Кристина',
   'Иван',
@@ -22,7 +22,7 @@ const names = [
   'Афанасий',
 ];
 
-const commentText = [
+const COMMENT_TEXT = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -31,7 +31,7 @@ const commentText = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
 ];
 
-const description = [
+const DESCRIPTIONS = [
   'Солнечный день',
   'Красивое небо',
   'Темная ночь',
@@ -57,6 +57,7 @@ const description = [
   'Ужасающая тень',
   'Мамино тепло',
 ];
+let identifier;
 
 const getRandomInteger = (min, max) => {
   const random = Math.random() * (max + 1 - min) + min;
@@ -66,14 +67,14 @@ const getRandomInteger = (min, max) => {
 const getRandomArrayElement = (array) => array[getRandomInteger(0, array.length - 1)];
 
 const getIdentifier = () => {
-  if (ID.length > maxPhotoCount) {
+  if (ID.length > PHOTO_COUNT) {
     return 'Фотографии кончились';
   }
 
-  identifier = getRandomInteger(1, maxPhotoCount);
+  identifier = getRandomInteger(1, PHOTO_COUNT);
 
   while (ID.includes(identifier)) {
-    identifier = getRandomInteger(1, maxPhotoCount);
+    identifier = getRandomInteger(1, PHOTO_COUNT);
   }
   ID.push(identifier);
   return identifier;
@@ -81,18 +82,18 @@ const getIdentifier = () => {
 
 const createDataComment = () => ({
   id: crypto.randomUUID(),
-  avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
-  message: getRandomInteger(commentText),
-  name: getRandomInteger(names),
+  avatar: `img/avatar-${getRandomInteger(1, AVATAR_COUNT)}.svg`,
+  message: getRandomInteger(COMMENT_TEXT),
+  name: getRandomInteger(NAMES),
 });
 
 const createDataPhoto = () => ({
   id: getIdentifier(),
   url: `photos/${identifier}.jpg`,
   likes: getRandomInteger(15,200),
-  comments: Array.from({length: getRandomInteger(0, maxCommentCount)}, createDataComment),
-  description: getRandomArrayElement(description),
+  comments: Array.from({length: getRandomInteger(0, COMMENT_COUNT)}, createDataComment),
+  description: getRandomArrayElement(DESCRIPTIONS),
 });
 
-const photosData = Array.from({length: maxPhotoCount}, createDataPhoto);
+const photosData = Array.from({length: PHOTO_COUNT}, createDataPhoto);
 console.log(photosData);
