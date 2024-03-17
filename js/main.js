@@ -1,2 +1,4 @@
 import './util.js';
-import './data.js';
+import {photosData} from './data.js';
+
+console.log(photosData);
