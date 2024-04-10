@@ -1,3 +1,4 @@
+// import {createDataComment} from './data.js';
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureCloseElement = bigPicture.querySelector('.big-picture__cancel');
 const bigPictureImage = bigPicture.querySelector('.big-picture__img img');
@@ -8,7 +9,7 @@ const descriptionText = bigPicture.querySelector('.social__caption');
 const bodyPage = document.querySelector('body');
 const comentsLoaderButoon = bigPicture.querySelector('.comments-loader');
 const commentsCountBlock = bigPicture.querySelector('.social__comment-count');
-// const commentElementTemplate = bigPicture.querySelector('.social__comment');
+const commentTemplate = document.querySelector('#comment').content.querySelector('.social__comment');
 
 const onDocumentKeydown = (evt) => {
   if (evt.key === 'Escape') {//закрытие по Escape
@@ -20,19 +21,29 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
+const createListComment = (comments) => {
+  const commentsListFragment = document.createDocumentFragment();
+
+  comments.forEach((comment) => {
+    const commentElement = commentTemplate.cloneNode(true);
+    const commentAvatar = commentElement.querySelector('.social__picture');
+    commentAvatar.src = comment.avatar;
+    commentAvatar.alt = comment.name;
+    commentElement.querySelector('.social__text').textContent = comment.message;
+    commentsListFragment.append(commentElement);
+  });
+  commentsList.append(commentsListFragment);
+};
+
 function setDataBigPicture(dataBigPicture) {
   bigPictureImage.src = dataBigPicture.url;
   descriptionText.textContent = dataBigPicture.description;
-  likesCount.likes = dataBigPicture.likes;
+  likesCount.textContent = dataBigPicture.likes;
   commentsCount.textContent = dataBigPicture.comments.length;
   commentsList.textContent = '';
-  // const renderComments = (commentsData) =>{
-  //   commentsData.forEach((comments)=>{
-  //     const commentElement = commentElementTemplate.cloneNode(true);
-  //     commentsList.append(commentElement);
-  //   });
-  // };
+  createListComment(dataBigPicture.comments);
 }
+
 
 export function renderBigPicture(dataBigPicture){
   setDataBigPicture(dataBigPicture); //устанавливает данные в модальное окно
