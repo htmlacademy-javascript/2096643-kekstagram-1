@@ -80,8 +80,8 @@ const getIdentifier = () => {
 const createDataComment = () => ({
   id: crypto.randomUUID(),
   avatar: `img/avatar-${getRandomInteger(1, AVATAR_COUNT)}.svg`,
-  message: getRandomInteger(COMMENT_TEXT),
-  name: getRandomInteger(NAMES),
+  message: getRandomArrayElement(COMMENT_TEXT),
+  name: getRandomArrayElement(NAMES),
 });
 
 const createDataPhoto = () => ({
