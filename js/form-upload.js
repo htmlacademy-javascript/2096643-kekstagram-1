@@ -1,4 +1,7 @@
-import { bodyPage,uploadForm } from './const.js';
+import { bodyPage,uploadForm, hashtagInput, descriptionInput } from './const.js';
+import {configureFormValidation} from './form-validation.js';
+import { getNormalizedStringArray } from './util.js';
+
 
 const fileUploadElement = uploadForm.querySelector('.img-upload__input');
 const editForm = uploadForm.querySelector('.img-upload__overlay');
@@ -19,6 +22,17 @@ const onDocumentKeydown = (evt) => {
     }
   }
 };
+const {isValidForm, resetValidate} = configureFormValidation(uploadForm, hashtagInput, descriptionInput);
+
+uploadForm.addEventListener('submit', (evt) =>{
+  if(isValidForm()){
+    hashtagsElement.value = getNormalizedStringArray(hashtagsElement.value);
+    descriptionElement.value = descriptionElement.value.trim();
+    resetValidate();
+  } else {
+    evt.preventDefault();
+  }
+});
 
 //функция открытия окна редактирования файла
 function openEditingImageForm() {
@@ -34,5 +48,6 @@ function closeEditingImageForm() {
   bodyPage.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
   fileUploadElement.value = '';//сбрасывает значение поля с выбором фото
+  resetValidate();
   uploadForm.reset();//сбрасывает значения в форме редактирования
 }

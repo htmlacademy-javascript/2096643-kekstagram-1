@@ -1,8 +1,6 @@
-import { uploadForm } from './const.js';
+import { uploadForm, hashtagInput, descriptionInput } from './const.js';
 import { getNormalizedStringArray } from './util.js';
 
-const hashtagInput = uploadForm.querySelector('.text__hashtags');
-const descriptionInput = uploadForm.querySelector('.text__description');
 const MAX__HASHTAGS__COUNT = 5;
 const MAX_COMMENTS_SYMBOLS = 140;
 
@@ -20,7 +18,7 @@ const hashtagRegex = /^#[a-zа-яё0-9]{1,19}$/i;
 const errorMessage = {
   HASHTAG__COUNT: `Количество хэштегов должно быть не более ${MAX__HASHTAGS__COUNT}`,
   DUPLICATE_HASHTAGS: 'Хэштеги не должны повторяться',
-  COMMENTS_SYMBOLS: `Максимаольная длинна комментария ${MAX_COMMENTS_SYMBOLS}`
+  COMMENTS_SYMBOLS: `Максимальная длинна комментария ${MAX_COMMENTS_SYMBOLS}`
 };
 const incorrectHashtag = [];
 const duplicateHashtag = [];
@@ -74,7 +72,7 @@ const validateHashtagDuplicate = (value) => {
 //проверка длинны комментария
 const validateDescriplionLength = (value) => MAX_COMMENTS_SYMBOLS >= value.length;
 
-export const configureFormValidation = (uploadForm, hashtagInput, descriptionInput) => {
+export const configureFormValidation = () => {
   const pristine = new Pristine(uploadForm, {
     classTo: 'img-upload__field-wrapper',
     errorTextParent: 'img-upload__field-wrapper',
