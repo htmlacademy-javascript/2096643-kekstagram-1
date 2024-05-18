@@ -21,7 +21,6 @@ const errorMessage = {
   COMMENTS_SYMBOLS: `Максимальная длинна комментария ${MAX_COMMENTS_SYMBOLS}`
 };
 const incorrectHashtag = [];
-const duplicateHashtag = [];
 
 //проверка на валидность
 function validateHashtagRules(value) {
@@ -30,13 +29,13 @@ function validateHashtagRules(value) {
   }
 
   const hashtags = getNormalizedStringArray(value);
-
+  incorrectHashtag.length = 0;
   hashtags.forEach((hashtag) => {
-    if (hashtagRegex.test === false) {//проверяет соответствие, если невалиден - попадает в массив невалидных
+    if (hashtagRegex.test(hashtag) === false) {//проверяет соответствие, если невалиден - попадает в массив невалидных
       incorrectHashtag.push(hashtag);
     }
-    return !incorrectHashtag.length <= 1;//если в массиве невалидных хэштегов хоть 1 есть - вернет false
   });
+  return !incorrectHashtag.length;//если в массиве невалидных хэштегов хоть 1 есть - вернет false
 }
 
 //функция выдает сообщение соответственно количеству неправильных хештегов
@@ -59,15 +58,9 @@ const validateHashtagCount = (value) => {
 //проверяет строку на наличие одинаковых хештегов
 const validateHashtagDuplicate = (value) => {
   const hashtags = getNormalizedStringArray(value);
-  const uniqueHasgtags = new Set();
+  const uniqueHasgtags = new Set(hashtags);
+  return hashtags.length === uniqueHasgtags.size;
 
-  hashtags.forEach((hashtag) => {
-    uniqueHasgtags.add(hashtag);
-    if (uniqueHasgtags.has(hashtag)) {
-      duplicateHashtag.push(hashtag);
-    }
-    return !duplicateHashtag.length <= 1;
-  });
 };
 //проверка длинны комментария
 const validateDescriplionLength = (value) => MAX_COMMENTS_SYMBOLS >= value.length;

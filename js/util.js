@@ -9,11 +9,11 @@ const getRandomArrayElement = (array) => array[getRandomInteger(0, array.length 
 
 
 //
-const getNormalizedStringArray = (string) => {
+const getNormalizedStringArray = (string) =>
   string.toString()//приводит к строке
     .toLowerCase()//приводит к одному регистру
     .trim()//удаляет пробелы в начале и конце
     .replace(/\s+/g, ' ')//убирает все пробелы между словами во всем документе
     .split(' ');//добавляет одиночныйпробел между словами
-};
+
 export { getRandomArrayElement, getRandomInteger, getNormalizedStringArray };
