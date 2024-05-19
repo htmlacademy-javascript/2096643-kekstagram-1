@@ -1,14 +1,11 @@
 import { commentsData, showListComment } from './comments.js';
+import {bigPicture, commentsList,bodyPage} from './const.js';
 
-
-const bigPicture = document.querySelector('.big-picture');
 const bigPictureCloseElement = bigPicture.querySelector('.big-picture__cancel');
 const bigPictureImage = bigPicture.querySelector('.big-picture__img img');
-const commentsList = bigPicture.querySelector('.social__comments');
 const commentsCount = bigPicture.querySelector('.social__comment-total-count');
 const likesCount = bigPicture.querySelector('.likes-count');
 const descriptionText = bigPicture.querySelector('.social__caption');
-const bodyPage = document.querySelector('body');
 
 
 const onDocumentKeydown = (evt) => {
@@ -41,13 +38,13 @@ bigPictureCloseElement.addEventListener('click', () => {//закрытие по 
   closeModal(bigPicture);
 });
 
-function openModal(modalElement) {//показать окно
+export function openModal(modalElement) {//показать окно
   modalElement.classList.remove('hidden');
   document.addEventListener('keydown', onDocumentKeydown);
   bodyPage.classList.add('modal-open');
 }
 
-function closeModal(modalElement) {//скрыть окно
+export function closeModal(modalElement) {//скрыть окно
   modalElement.classList.add('hidden');
   document.removeEventListener('keydown', onDocumentKeydown);
   bodyPage.classList.remove('modal-open');

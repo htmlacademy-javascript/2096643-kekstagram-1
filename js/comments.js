@@ -1,8 +1,8 @@
-const bigPicture = document.querySelector('.big-picture');
+import {bigPicture,commentsList} from './const.js';
+
 const showCommentsCount = bigPicture.querySelector('.social__comment-shown-count');
 const comentsLoaderButton = bigPicture.querySelector('.comments-loader');
 const commentTemplate = document.querySelector('#comment').content.querySelector('.social__comment');
-const commentsList = bigPicture.querySelector('.social__comments');
 
 const COMMENTS_STEP = 5;
 export const commentsData = {showComments: 0, dataComments: []} ;
