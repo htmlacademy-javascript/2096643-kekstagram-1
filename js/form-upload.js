@@ -2,7 +2,7 @@ import { bodyPage,uploadForm, hashtagInput, descriptionInput } from './const.js'
 import {configureFormValidation} from './form-validation.js';
 import { getNormalizedStringArray } from './util.js';
 import {activatingImageEditingScale, resetImageEditingScale} from './scale-photo.js';
-
+import {resetSlider} from './effects.js';
 
 const fileUploadElement = uploadForm.querySelector('.img-upload__input');
 const editForm = uploadForm.querySelector('.img-upload__overlay');
@@ -53,4 +53,5 @@ function closeEditingImageForm() {
   resetValidate();
   uploadForm.reset();//сбрасывает значения в форме редактирования
   resetImageEditingScale();
+  resetSlider();
 }
