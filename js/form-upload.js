@@ -1,7 +1,8 @@
 import { bodyPage,uploadForm, hashtagInput, descriptionInput } from './const.js';
 import {configureFormValidation} from './form-validation.js';
 import { getNormalizedStringArray } from './util.js';
-
+import {activatingImageEditingScale, resetImageEditingScale} from './scale-photo.js';
+import {resetSlider} from './effects.js';
 
 const fileUploadElement = uploadForm.querySelector('.img-upload__input');
 const editForm = uploadForm.querySelector('.img-upload__overlay');
@@ -40,6 +41,7 @@ function openEditingImageForm() {
   bodyPage.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
   closeFormButton.addEventListener('click', closeEditingImageForm);
+  activatingImageEditingScale();
 }
 
 //функция закрытия окна редактирования файла
@@ -50,4 +52,6 @@ function closeEditingImageForm() {
   fileUploadElement.value = '';//сбрасывает значение поля с выбором фото
   resetValidate();
   uploadForm.reset();//сбрасывает значения в форме редактирования
+  resetImageEditingScale();
+  resetSlider();
 }
