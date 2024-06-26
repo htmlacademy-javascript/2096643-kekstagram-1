@@ -2,7 +2,7 @@ import { uploadForm } from './const.js';
 
 const sliderWrapper = uploadForm.querySelector('.effect-level');
 const sliderElement = uploadForm.querySelector('.effect-level__slider');
-const effectLevelValue = uploadForm.querySelector('.effect-level__value');
+const effectLevelValueElement = uploadForm.querySelector('.effect-level__value');
 const previewImage = uploadForm.querySelector('.img-upload__preview');
 const effectsElement = uploadForm.querySelector('.effects');
 
@@ -58,7 +58,7 @@ const EFFECTS = [//массив с настройками эффектов
 ];
 
 const DEFAULT_EFFECT = EFFECTS[0];
-let choosenEffect = DEFAULT_EFFECT;
+let chosenEffect = DEFAULT_EFFECT;
 
 const hideSlider = () => {
   sliderWrapper.classList.add('hidden');
@@ -71,14 +71,14 @@ const showSlider = () => {
 const updateSlider = () => {
   sliderElement.noUiSlider.updateOptions({
     range: {
-      min: choosenEffect.min,
-      max: choosenEffect.max,
+      min: chosenEffect.min,
+      max: chosenEffect.max,
     },
-    step: choosenEffect.step,
-    start: choosenEffect.max,
+    step: chosenEffect.step,
+    start: chosenEffect.max,
   });
 
-  if (choosenEffect === DEFAULT_EFFECT) {
+  if (chosenEffect === DEFAULT_EFFECT) {
     hideSlider();
   } else {
     showSlider();
@@ -86,7 +86,7 @@ const updateSlider = () => {
 };
 
 export const resetSlider = () => {
-  choosenEffect = DEFAULT_EFFECT;
+  chosenEffect = DEFAULT_EFFECT;
   updateSlider();
 };
 
@@ -95,17 +95,17 @@ const onEffectsChange = (evt) => {
   if (!evt.target.classList.contains('effects__radio')) {
     return;
   }
-  choosenEffect = EFFECTS.find((effect) => effect.name === evt.target.value);
-  previewImage.className = `effects__preview--${choosenEffect.name}`;
+  chosenEffect = EFFECTS.find((effect) => effect.name === evt.target.value);
+  previewImage.className = `effects__preview--${chosenEffect.name}`;
   updateSlider();
 };
 
 const onSliderUpdate = () => {
   const sliderValue = sliderElement.noUiSlider.get();//актуальное значение с ползунка
-  previewImage.style.filter = (choosenEffect === DEFAULT_EFFECT)
+  previewImage.style.filter = (chosenEffect === DEFAULT_EFFECT)
     ? DEFAULT_EFFECT.style
-    : `${choosenEffect.style}(${sliderValue}${choosenEffect.unit})`;
-  effectLevelValue.value = sliderValue;
+    : `${chosenEffect.style}(${sliderValue}${chosenEffect.unit})`;
+  effectLevelValueElement.value = sliderValue;
 };
 
 noUiSlider.create(sliderElement, {//задает параметры слайдера

@@ -16,7 +16,7 @@ const createThumbnail = ({url,likes,comments,description}, onClickImage) => {
   return photoElement;
 };
 
-const renderPhoto = (photosData, onClickImage) => {
+export const renderPhoto = (photosData, onClickImage) => {
   const photoListFragment = document.createDocumentFragment();
 
   photosData.forEach((picture) =>{
@@ -25,7 +25,3 @@ const renderPhoto = (photosData, onClickImage) => {
   });
   photosListElement.append(photoListFragment);
 };
-
-export {renderPhoto};
-
-

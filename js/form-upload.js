@@ -1,21 +1,31 @@
-import { bodyPage,uploadForm, hashtagInput, descriptionInput } from './const.js';
-import {configureFormValidation} from './form-validation.js';
-import { getNormalizedStringArray } from './util.js';
-import {activatingImageEditingScale, resetImageEditingScale} from './scale-photo.js';
-import {resetSlider} from './effects.js';
+import { bodyPage, uploadForm, hashtagInput, descriptionInput, editForm, submitButton } from './const.js';
+import { configureFormValidation } from './form-validation.js';
+import { activatingImageEditingScale, resetImageEditingScale } from './scale-photo.js';
+import { resetSlider } from './effects.js';
+import { sendData } from './api.js';
+import { showUploadErrorMessage, showUploadSuccessMessage } from './message-response.js';
 
 const fileUploadElement = uploadForm.querySelector('.img-upload__input');
-const editForm = uploadForm.querySelector('.img-upload__overlay');
 const closeFormButton = uploadForm.querySelector('.img-upload__cancel');
 const hashtagsElement = document.querySelector('.text__hashtags');
 const descriptionElement = document.querySelector('.text__description');
+const preview = document.querySelector('.img-upload__preview img');
+const FILE__TYPES = ['jpg', 'png', 'gif', 'jpeg'];
 
 fileUploadElement.addEventListener('change', () => {
   openEditingImageForm();
+  //добавляет свою фотографию в форму
+  const file = fileUploadElement.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = FILE__TYPES.some((it) => fileName.endsWith(it));//проверяет подходит ли формат из допустимых
+  if(matches) {
+    preview.src = URL.createObjectURL(file);//создает ссылку для фото с локального компьютера
+  }
 });
+/** !!!!!!!! загружаемое фото огромное, что делать с размером?? */
 
 //функция закрытия окна по escape с исключениями закрытия при фокусе на полях хэштега и коментария
-const onDocumentKeydown = (evt) => {
+export const onDocumentKeydown = (evt) => {
   if (evt.key === 'Escape') {
     evt.preventDefault();
     if (![hashtagsElement, descriptionElement].includes(document.activeElement)) {
@@ -23,17 +33,8 @@ const onDocumentKeydown = (evt) => {
     }
   }
 };
-const {isValidForm, resetValidate} = configureFormValidation(uploadForm, hashtagInput, descriptionInput);
 
-uploadForm.addEventListener('submit', (evt) =>{
-  if(isValidForm()){
-    hashtagsElement.value = getNormalizedStringArray(hashtagsElement.value);
-    descriptionElement.value = descriptionElement.value.trim();
-    resetValidate();
-  } else {
-    evt.preventDefault();
-  }
-});
+export const { isValidForm, resetValidate } = configureFormValidation(uploadForm, hashtagInput, descriptionInput);
 
 //функция открытия окна редактирования файла
 function openEditingImageForm() {
@@ -44,14 +45,52 @@ function openEditingImageForm() {
   activatingImageEditingScale();
 }
 
+export function resetEditingForm() {//сбрасывает значения в форме редактирования
+  resetValidate();
+  uploadForm.reset();
+  resetImageEditingScale();
+  resetSlider();
+}
+
 //функция закрытия окна редактирования файла
 function closeEditingImageForm() {
   editForm.classList.add('hidden');
   bodyPage.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
   fileUploadElement.value = '';//сбрасывает значение поля с выбором фото
-  resetValidate();
-  uploadForm.reset();//сбрасывает значения в форме редактирования
-  resetImageEditingScale();
-  resetSlider();
+  resetEditingForm();
 }
+
+
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = 'Сохраняю...';
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = 'Сохранить';
+};
+
+export const setUploadFormSubmit = (onSuccess) => {
+  uploadForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    if (isValidForm()) {
+      blockSubmitButton();
+      sendData(
+        () => {
+          onSuccess();
+          unblockSubmitButton();
+          showUploadSuccessMessage();
+        },
+        () => {
+          showUploadErrorMessage();
+          unblockSubmitButton();
+        },
+        new FormData(evt.target),
+      );
+    }
+  });
+};
+
