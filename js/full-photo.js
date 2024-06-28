@@ -1,11 +1,11 @@
 import { commentsData, showListComment } from './comments.js';
-import {bigPicture, commentsList,bodyPage} from './const.js';
+import {fullPhoto, commentsList,bodyPage} from './const.js';
 
-const bigPictureCloseElement = bigPicture.querySelector('.big-picture__cancel');
-const bigPictureImage = bigPicture.querySelector('.big-picture__img img');
-const commentsCount = bigPicture.querySelector('.social__comment-total-count');
-const likesCount = bigPicture.querySelector('.likes-count');
-const descriptionText = bigPicture.querySelector('.social__caption');
+const fullPhotoCloseElement = fullPhoto.querySelector('.big-picture__cancel');
+const fullPhotoImage = fullPhoto.querySelector('.big-picture__img img');
+const commentsCount = fullPhoto.querySelector('.social__comment-total-count');
+const likesCount = fullPhoto.querySelector('.likes-count');
+const descriptionText = fullPhoto.querySelector('.social__caption');
 
 
 const onDocumentKeydown = (evt) => {
@@ -18,24 +18,24 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
-function setDataBigPicture(dataBigPicture) {
-  bigPictureImage.src = dataBigPicture.url;
+function setDataFullPhoto(dataFullPhoto) {
+  fullPhotoImage.src = dataFullPhoto.url;
   commentsData.showComments = 0;//обнуляем чтобы при открытии нескольких карточек не суммировалось количество комм-в
-  commentsData.dataComments = dataBigPicture.comments;
-  descriptionText.textContent = dataBigPicture.description;
-  likesCount.textContent = dataBigPicture.likes;
-  commentsCount.textContent = dataBigPicture.comments.length;
+  commentsData.dataComments = dataFullPhoto.comments;
+  descriptionText.textContent = dataFullPhoto.description;
+  likesCount.textContent = dataFullPhoto.likes;
+  commentsCount.textContent = dataFullPhoto.comments.length;
   commentsList.textContent = '';////обнуляем чтобы при открытии нескольких карточек не суммировались комментарии
   showListComment(commentsData.dataComments);
 }
 
-export function renderBigPicture(dataBigPicture){
-  setDataBigPicture(dataBigPicture); //устанавливает данные в модальное окно
-  openModal(bigPicture);
+export function renderFullPhoto(dataFullPhoto){
+  setDataFullPhoto(dataFullPhoto); //устанавливает данные в модальное окно
+  openModal(fullPhoto);
 }
 
-bigPictureCloseElement.addEventListener('click', () => {//закрытие по крестику
-  closeModal(bigPicture);
+fullPhotoCloseElement.addEventListener('click', () => {//закрытие по крестику
+  closeModal(fullPhoto);
 });
 
 export function openModal(modalElement) {//показать окно

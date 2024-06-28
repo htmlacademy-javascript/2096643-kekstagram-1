@@ -1,7 +1,7 @@
-import {bigPicture,commentsList} from './const.js';
+import {fullPhoto,commentsList} from './const.js';
 
-const showCommentsCount = bigPicture.querySelector('.social__comment-shown-count');
-const comentsLoaderButton = bigPicture.querySelector('.comments-loader');
+const showCommentsCount = fullPhoto.querySelector('.social__comment-shown-count');
+const commentsLoaderButton = fullPhoto.querySelector('.comments-loader');
 const commentTemplate = document.querySelector('#comment').content.querySelector('.social__comment');
 
 const COMMENTS_STEP = 5;
@@ -26,15 +26,15 @@ export function showListComment(list) {//отображает количеств
   if (list.length > COMMENTS_STEP) {
     createListComment(list.splice(0, COMMENTS_STEP));
     commentsData.showComments += COMMENTS_STEP;
-    comentsLoaderButton.classList.remove('hidden');
+    commentsLoaderButton.classList.remove('hidden');
   } else {
     createListComment(list);
     commentsData.showComments += list.length;
-    comentsLoaderButton.classList.add('hidden');
+    commentsLoaderButton.classList.add('hidden');
   }
   showCommentsCount.textContent = commentsData.showComments;
 }
 
-comentsLoaderButton.addEventListener('click', () =>{//загрузка коментариев по кнопке
+commentsLoaderButton.addEventListener('click', () =>{//загрузка коментариев по кнопке
   showListComment(commentsData.dataComments);
 });
