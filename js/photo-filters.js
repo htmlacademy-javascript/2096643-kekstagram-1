@@ -2,23 +2,23 @@ import { photoFiltersContainer } from './const.js';
 import { renderPhoto } from './photo-thumbnail.js';
 import { debounce, sortRandomly } from './util.js';
 
-const PICTURES__COUNT = 10;
+const PICTURES_COUNT = 10;
+const DEBOUNCE_DELAY = 500;
+
 const Filter = {
   RANDOM: 'filter-random',
   DISCUSSED: 'filter-discussed',
   DEFAULT: 'filter-default'
 };
-const DEBOUNCE_DELAY = 500;
 
 const debounceRenderPhoto = debounce(renderPhoto, DEBOUNCE_DELAY);
 
 const sortByComments = (pictureA, pictureB) => pictureB.comments.length - pictureA.comments.length;
 
-
 const onButtonFilterClick = {
   [Filter.DEFAULT]: (picturesData) => picturesData,
   [Filter.DISCUSSED]: (picturesData) => picturesData.slice().sort(sortByComments),
-  [Filter.RANDOM]: (picturesData) => sortRandomly(picturesData, PICTURES__COUNT)
+  [Filter.RANDOM]: (picturesData) => sortRandomly(picturesData, PICTURES_COUNT)
 };
 
 const filterPhotos = (clickedButton, pictures, callback) => {

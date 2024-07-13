@@ -1,11 +1,13 @@
-import {fullPhoto,commentsList} from './const.js';
+import { fullPhoto,commentsList } from './const.js';
+
+const COMMENTS_STEP = 5;
 
 const showCommentsCount = fullPhoto.querySelector('.social__comment-shown-count');
+const commentsCount = fullPhoto.querySelector('.social__comment-total-count');
 const commentsLoaderButton = fullPhoto.querySelector('.comments-loader');
 const commentTemplate = document.querySelector('#comment').content.querySelector('.social__comment');
 
-const COMMENTS_STEP = 5;
-export const commentsData = {showComments: 0, dataComments: []} ;
+let currentComments = [];
 
 
 const createListComment = (comments) => {
@@ -22,19 +24,22 @@ const createListComment = (comments) => {
   commentsList.append(commentsListFragment);
 };
 
-export function showListComment(list) {
-  if (list.length > COMMENTS_STEP) {
-    createListComment(list.splice(0, COMMENTS_STEP));
-    commentsData.showComments += COMMENTS_STEP;
-    commentsLoaderButton.classList.remove('hidden');
-  } else {
-    createListComment(list);
-    commentsData.showComments += list.length;
-    commentsLoaderButton.classList.add('hidden');
-  }
-  showCommentsCount.textContent = commentsData.showComments;
+export function onLoaderButtonClick() {
+  const shownComments = commentsList.childElementCount;
+  let endOfSlice = shownComments + COMMENTS_STEP;
+  const isAllCommentsShown = endOfSlice >= currentComments.length;
+  endOfSlice = isAllCommentsShown ? currentComments.length : endOfSlice;
+  const commentsSlice = currentComments.slice(shownComments, endOfSlice);
+  createListComment(commentsSlice);
+  showCommentsCount.textContent = endOfSlice;
+  commentsLoaderButton.classList.toggle('hidden', isAllCommentsShown);
 }
 
-commentsLoaderButton.addEventListener('click', () =>{
-  showListComment(commentsData.dataComments);
-});
+export const renderComments = (comments) => {
+  commentsList.textContent = '';
+  commentsCount.textContent = comments.length;
+  currentComments = comments;
+  commentsLoaderButton.click();
+};
+
+commentsLoaderButton.addEventListener('click', onLoaderButtonClick);

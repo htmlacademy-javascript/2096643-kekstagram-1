@@ -1,11 +1,6 @@
 import { bodyPage } from './const.js';
 const ALERT_SHOW_TIME = 5000;
 
-export const getRandomInteger = (min, max) => {
-  const random = Math.random() * (max + 1 - min) + min;
-  return Math.floor(random);
-};
-
 export const sortRandomly = (array, count) => array.slice().sort(() => Math.random() - 0.5).slice(0, count);
 
 export const getNormalizedStringArray = (string) =>

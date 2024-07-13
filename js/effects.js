@@ -1,10 +1,5 @@
 import { uploadForm, previewImage } from './const.js';
 
-const sliderWrapper = uploadForm.querySelector('.effect-level');
-const sliderElement = uploadForm.querySelector('.effect-level__slider');
-const effectLevelValueElement = uploadForm.querySelector('.effect-level__value');
-const effectsElement = uploadForm.querySelector('.effects');
-
 const EFFECTS = [
   {
     name: 'none',
@@ -55,8 +50,12 @@ const EFFECTS = [
     unit: '',
   },
 ];
-
 const DEFAULT_EFFECT = EFFECTS[0];
+
+const sliderWrapper = uploadForm.querySelector('.effect-level');
+const sliderElement = uploadForm.querySelector('.effect-level__slider');
+const effectLevelValueElement = uploadForm.querySelector('.effect-level__value');
+const effectsElement = uploadForm.querySelector('.effects');
 let chosenEffect = DEFAULT_EFFECT;
 
 const hideSlider = () => {

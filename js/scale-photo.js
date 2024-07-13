@@ -1,14 +1,14 @@
 import { previewImage } from './const.js';
 
-const controlScaleSmaller = document.querySelector('.scale__control--smaller');
-const controlScaleBigger = document.querySelector('.scale__control--bigger');
-const controlScaleValue = document.querySelector('.scale__control--value');
-
 const ScaleOptions = {
   MIN_SCALE: 25,
   MAX_SCALE: 100,
   STEP_SCALE: 25,
 };
+
+const controlScaleSmaller = document.querySelector('.scale__control--smaller');
+const controlScaleBigger = document.querySelector('.scale__control--bigger');
+const controlScaleValue = document.querySelector('.scale__control--value');
 
 const updateScale = (controlValue) => {
   controlScaleValue.value = `${controlValue}%`;

@@ -8,7 +8,7 @@ let currentMessage;
 const getUploadMessage = (template) => {
   currentMessage = template.cloneNode(true);
   bodyPage.append(currentMessage);
-  bodyPage.addEventListener('click', closeUploadMessage);
+  bodyPage.addEventListener('click', onUploadMessageClose);
 };
 
 export const showUploadSuccessMessage = () => {
@@ -20,13 +20,13 @@ export const showUploadErrorMessage = () => {
   getUploadMessage(errorMessageTemplate);
 };
 
-function closeUploadMessage (evt) {
+function onUploadMessageClose (evt) {
   evt.stopPropagation();
   const existElement = document.querySelector('.success') || document.querySelector('.error');
   const closeButton = existElement.querySelector('button');
   if(evt.target === existElement || evt.target === closeButton || evt.key === 'Escape'){
     existElement.remove();
-    bodyPage.removeEventListener('keydown', closeUploadMessage);
-    bodyPage.removeEventListener('click', closeUploadMessage);
+    bodyPage.removeEventListener('keydown', onUploadMessageClose);
+    bodyPage.removeEventListener('click', onUploadMessageClose);
   }
 }
